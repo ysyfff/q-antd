@@ -1,1 +1,5 @@
 /lib/**/**.js
+components/**/*.js
+components/**/*.jsx
+!.eslintrc.js
+!components/*/__tests__/**/*.js

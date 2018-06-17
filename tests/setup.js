@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+
 const Enzyme = require('enzyme');
 
 let Adapter;
