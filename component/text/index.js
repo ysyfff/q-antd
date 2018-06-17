@@ -19,7 +19,7 @@ export default class Text extends React.Component {
       >
         {children}
       </span>
-    )
+    );
   }
 }
 

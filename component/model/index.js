@@ -1,6 +1,6 @@
 /*
- * @Author: shiyong.yin 
- * @Date: 2018-04-25 14:59:50 
+ * @Author: shiyong.yin
+ * @Date: 2018-04-25 14:59:50
  * @Desc: 非Form形式的表单元素的使用
  * const search=observable({a: 1})
  * <Model model={search}>
@@ -25,9 +25,15 @@ export default class Model extends React.Component {
   render() {
     const { model, children, ...remain } = this.props;
     return (
-      <Provider model={model} duplexer={this.duplexer} validateOnChange={this.nilFunction} validateOnBlur={this.nilFunction}>
+      <Provider
+        model={model}
+        duplexer={this.duplexer}
+        validateOnChange={this.nilFunction}
+        validateOnBlur={this.nilFunction}
+        {...remain}
+      >
         {children}
       </Provider>
-    )
+    );
   }
 }

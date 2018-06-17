@@ -1,5 +1,5 @@
-import duplexHOC from '../_util/duplex';
 import { DatePicker } from 'antd';
+import duplexHOC from '../_util/duplex';
 
 const DatePicker_ = duplexHOC(DatePicker);
 

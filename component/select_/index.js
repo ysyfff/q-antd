@@ -1,4 +1,4 @@
-import duplexHOC from '../_util/duplex';
 import { Select } from 'antd';
+import duplexHOC from '../_util/duplex';
 
 export default duplexHOC(Select);

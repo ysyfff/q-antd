@@ -1,4 +1,4 @@
-import duplexHOC from '../_util/duplex';
 import { TimePicker } from 'antd';
+import duplexHOC from '../_util/duplex';
 
 export default duplexHOC(TimePicker);

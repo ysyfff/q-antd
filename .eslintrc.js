@@ -1,5 +1,12 @@
 const eslintrc = {
   extends: ['eslint-config-airbnb'],
+  env: {
+    jest: true,
+    es6: true,
+    browser: true,
+    node: true,
+    jasmine: true,
+  },
   parser: 'babel-eslint',
   plugins: ['react'],
   rules: {
@@ -32,6 +39,8 @@ const eslintrc = {
     'react/no-danger': 0,
     'no-restricted-globals': 0,
     'react/prefer-stateless-function': 0,
+    'no-underscore-dangle': 0,
+    'react/jsx-pascal-case': 0,
   },
 };
 
