@@ -1,0 +1,54 @@
+{
+  "name": "q-antd",
+  "version": "2.3.4",
+  "description": "双绑形式的antd。受控组件的双绑、Form表单验证",
+  "main": "./lib/index.js",
+  "repository": "git@gitlab.corp.qunar.com:shiyong.yin/q-antd.git",
+  "author": "shiyong.yin <braveyin168@outlook.com> braveyin168@outlook.com",
+  "license": "MIT",
+  "devDependencies": {
+    "antd": "^3.6.2",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-15": "^1.0.5",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^23.1.0",
+    "mobx": "^5.0.2",
+    "mobx-react": "^5.2.3",
+    "q-antd-tools": "^1.0.13",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "peerDependencies": {
+    "antd": "^3.0.3",
+    "mobx": "^3.4.1",
+    "mobx-react": "^4.3.5",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  },
+  "dependencies": {
+    "async-validator": "^1.8.2",
+    "core-decorators": "^0.20.0",
+    "lodash": "^4.17.5",
+    "moment": "^2.20.1",
+    "prop-types": "^15.6.1",
+    "set-props": "^1.0.8",
+    "warning": "^3.0.0"
+  },
+  "keywords": [
+    "antd",
+    "q-antd",
+    "Form",
+    "Fields",
+    "duplex",
+    "mobx",
+    "react"
+  ],
+  "scripts": {
+    "compile": "q-antd-tools run compile",
+    "test": "jest --config .jest.js"
+  }
+}
