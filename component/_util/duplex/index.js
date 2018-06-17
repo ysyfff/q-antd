@@ -3,15 +3,10 @@
  * @Date: 2018-01-08 15:30:31
  * @Last Modified by: shiyong.yin
  * @Description: 实现react双绑
- * @Usage: 
- * 
- * @duplex
- * class XX extends React.Component {
- * }
  */
 
 /**
- * 思路：用mobx + decorator + hoc实现双绑
+ * 思路：用mobx + hoc实现双绑
  * 
  * 问：如何解决双绑的问题
  * 答：通过HOC给受控组件统一加上value和onChange回调
@@ -21,9 +16,6 @@
  * 
  * 问：如何实现a.b.c这种动态结构的双绑
  * 答：使用a.b.c作为key值新增到model中，最后输出model的时候将其扁平化即可
- * (由于是动态新增到model中
- *  这就说明原来的model中是不存在此key值的
- *  应该移除@2.2.9以及之前的版本中key不存在model中的判断)
  */
 'use strict';
 
@@ -69,22 +61,8 @@ export default ComposedComponent => inject('model', 'duplexer', 'validateOnChang
     const expandedInitVal = '';
 
     if (expanded) {
-      //重要前提，如果是expanded我们先假设这个一个map类型
-      //重要前提，如果是expanded我们先假设这个一个map类型
-      //重要前提，如果是expanded我们先假设这个一个map类型
-
-      //1.理论上来说，model中是不存在duplex字段的，所以需要我们加上此字段
-      //2. 为了防止意外，我们做一个判断
-      // if(mobx.toJS(model).hasOwnProperty(duplex)){
-      //   duplexValue = model.get(duplex);
-      // }else{
       const { key, value } = this.createKeyValueViaDot(duplex, this.expandedInitVal);
       model.set(key, value);
-      // duplexValue = model.get(duplex);
-      // }
-
-      //如何实现duplex的扁平化 参见：https://github.com/react-component/form/search?utf8=%E2%9C%93&q=flattenRegisteredFields&type=
-      // duplex.split('.').map()
     }
   }
 
@@ -101,7 +79,6 @@ export default ComposedComponent => inject('model', 'duplexer', 'validateOnChang
     const keys = str.split('.');
     let initial = mobx.toJS(model.get(keys[0]));
     let middle = {};
-    let allKeywords = {}; //倒数第二个节点的所有字段
     const len = keys.length;
 
     if (len === 1) {
@@ -110,8 +87,6 @@ export default ComposedComponent => inject('model', 'duplexer', 'validateOnChang
 
     for (let i = 1; i < len; i++) {
       let currKey = keys[i];
-
-      // console.log(str, i, currKey)
 
       if (i === 1) {
         if (initial) { //如果inital已经存在，也就是说model已经存在
@@ -160,11 +135,9 @@ export default ComposedComponent => inject('model', 'duplexer', 'validateOnChang
     if (len === 1) {
       return originalObj[keys[0]];
     }
-    // let middle = 
+    
     for (let i = 0; i < len; i++) {
       let currKey = keys[i];
-
-      // console.log(str, i, currKey, JSON.stringify(originalObj));
 
       if (i === 0) {
         if (originalObj[currKey]) {
@@ -227,17 +200,7 @@ export default ComposedComponent => inject('model', 'duplexer', 'validateOnChang
     if (dynamic) { //动态两个变量
       duplexValue = model[duplex[0]][duplex[1]];
     } else if (expanded) {
-      //重要前提，如果是expanded我们先假设这个一个map类型
-      //重要前提，如果是expanded我们先假设这个一个map类型
-      //重要前提，如果是expanded我们先假设这个一个map类型
-
-      //1.理论上来说，model中是不存在duplex字段的，所以需要我们加上此字段
-      //2. 为了防止意外，我们做一个判断
-
       duplexValue = this.getExpandedMapValue(duplex, mobx.toJS(model), this.expandedInitVal);
-
-      //如何实现duplex的扁平化 参见：https://github.com/react-component/form/search?utf8=%E2%9C%93&q=flattenRegisteredFields&type=
-      // duplex.split('.').map()
     } else { //静态一个变量
       const keys = duplex.split(',');
       staticWith2Param = keys.length === 2;
@@ -266,25 +229,12 @@ export default ComposedComponent => inject('model', 'duplexer', 'validateOnChang
     warning(
       existed,
       `${duplex} 不存在model中`
-    )
+    );
 
     //注册键盘事件
     this.getKeyCodeFromProps((eventType, code, prop) => {
       addons[eventType] = middlewareKeyCode(code, this.props[prop]);
     });
-    //注册键盘事件
-    // for (let prop in this.props) {
-    //   if (this.props.hasOwnProperty(prop)) {
-    //     console.log(prop)
-
-    //     //如果prop中含有-字符串，我们认为要进行修饰符相关的操作
-    //     if (prop.indexOf('-') > 0) {
-    //       let [eventType, code] = prop.split('-');
-    //       addons[eventType] = middlewareKeyCode(code, this.props[prop]);
-    //     }
-    //   }
-    // }
-
 
     //双绑之去
     switch (componentName) {
