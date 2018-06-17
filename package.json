@@ -3,7 +3,7 @@
   "version": "2.3.4",
   "description": "双绑形式的antd。受控组件的双绑、Form表单验证",
   "main": "./lib/index.js",
-  "repository": "git@gitlab.corp.qunar.com:shiyong.yin/q-antd.git",
+  "repository": "git@github.com:ysyfff/q-antd.git",
   "author": "shiyong.yin <braveyin168@outlook.com> braveyin168@outlook.com",
   "license": "MIT",
   "devDependencies": {
