@@ -22,13 +22,13 @@ export default class View extends React.Component {
               'absolute'
               :
               'static',
-          ...style, //style就是style
-          ...other //其他属性也是style
+          ...style, // style就是style
+          ...other // 其他属性也是style
         }}
       >
         {children}
       </div>
-    )
+    );
   }
 }
 
@@ -40,4 +40,4 @@ setProps(View, {
   ml: [0, PropTypes.number],
   block: [false, PropTypes.bool],
   clear: [false, PropTypes.bool],
-})
+});

@@ -59,6 +59,6 @@
   "scripts": {
     "compile": "q-antd-tools run compile",
     "test": "jest --config .jest.js",
-    "lint": "eslint tests components ./.eslintrc.js --ext '.js,.jsx'"
+    "lint": "eslint tests component ./.eslintrc.js --ext '.js,.jsx'"
   }
 }
