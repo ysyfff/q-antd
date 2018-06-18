@@ -21,6 +21,7 @@
     "jest": "^23.1.0",
     "mobx": "^5.0.2",
     "mobx-react": "^5.2.3",
+    "prettier": "1.13.5",
     "q-antd-tools": "^1.0.13",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
