@@ -54,6 +54,6 @@
   "scripts": {
     "compile": "q-antd-tools run compile",
     "test": "jest --config .jest.js",
-    "lint": "eslint tests component ./.eslintrc.js --ext '.js,.jsx'"
+    "format": "prettier --config .prettierrc --write \"component/**/*.js\""
   }
 }
