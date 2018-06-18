@@ -1,5 +1,7 @@
 [![Build Status](https://www.travis-ci.org/ysyfff/q-antd.svg?branch=master&style=flat-square)](https://www.travis-ci.org/ysyfff/q-antd)
 
+[![NPM downloads](http://img.shields.io/npm/dm/q-antd.svg?style=flat-square)](http://www.npmtrends.com/q-antd)
+
 # 简介
 q-antd是在antd的基础上，结合mobx，对antd中的表单元素进行二次改装和对Form的重写一个npm包，使得表单元素支持双工绑定，使得表单使用更简单，从而提高开发效率
 
