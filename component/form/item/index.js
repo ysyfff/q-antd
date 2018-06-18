@@ -13,22 +13,29 @@ import View from '../../view';
 import _ from 'lodash';
 import setProps from 'set-props';
 const IconStyle = {
-  transform: 'scale(0.85)'
-}
+  transform: 'scale(0.85)',
+};
 /**
  * fields: 用来存储一个Provider中的所有字段
  * model: 用来存储一个Provider中的所有字段的值
  * rules: 用来存储一个Provider中的所有字段的规则
  * type: type是用来表示Term的type的，和校验规则无关
  */
-@inject('fields', 'model', 'rules', 'labelStyle', 'ItemComponentLayout', 'labelWidth', 'labelPosition')
+@inject(
+  'fields',
+  'model',
+  'rules',
+  'labelStyle',
+  'ItemComponentLayout',
+  'labelWidth',
+  'labelPosition'
+)
 @observer
 export default class FormItem extends React.Component {
   @observable validateState = '';
   @observable validateMessage = '';
   @observable isRequired = false;
   @observable trigger = 'onChange';
-
 
   @autobind
   validateOnChange() {
@@ -41,7 +48,7 @@ export default class FormItem extends React.Component {
   }
 
   @autobind
-  validate(trigger, fn = ()=>1) {
+  validate(trigger, fn = () => 1) {
     const { rules, prop, model, duplex } = this.props;
     console.log('item validate');
 
@@ -50,23 +57,22 @@ export default class FormItem extends React.Component {
     }
     // debugger
     //从rules根据prop中获取对应的校验规则，并根据trigger进行过滤
-    const pureRules = mobx.toJS(rules[prop]) || []
-    const theRules = trigger ?
-      pureRules.filter((rule) => {
-        // debugger
-        //如果有trigger配置参数，提取对应的trigger规则，否则返回false，那么theRule就是空数组，就不进行校验
-        if (rule.trigger) {
-          if (_.isArray(rule.trigger)) {
-            return rule.trigger.includes(trigger);
+    const pureRules = mobx.toJS(rules[prop]) || [];
+    const theRules = trigger
+      ? pureRules.filter(rule => {
+          // debugger
+          //如果有trigger配置参数，提取对应的trigger规则，否则返回false，那么theRule就是空数组，就不进行校验
+          if (rule.trigger) {
+            if (_.isArray(rule.trigger)) {
+              return rule.trigger.includes(trigger);
+            } else {
+              return rule.trigger === trigger ? true : false;
+            }
           } else {
-            return rule.trigger === trigger ? true : false;
+            return false;
           }
-        } else {
-          return false
-        }
-      })
-      :
-      pureRules;
+        })
+      : pureRules;
 
     if (!theRules || theRules.length === 0) {
       fn();
@@ -96,11 +102,10 @@ export default class FormItem extends React.Component {
       this.validateState = !errors ? 'success' : 'error';
       this.validateMessage = errors ? errors[0].message : '';
 
-      fn(this.validateMessage)
-    })
+      fn(this.validateMessage);
+    });
 
     this.validateDisabled = false;
-
   }
 
   resetField() {
@@ -109,7 +114,6 @@ export default class FormItem extends React.Component {
 
   componentWillUnmount() {
     this.props.fields.splice(this.props.fields.indexOf(this), 1);
-    
   }
 
   componentDidMount() {
@@ -118,15 +122,33 @@ export default class FormItem extends React.Component {
     if (prop !== void 0) {
       this.props.fields.push(this);
     }
-    
-    this.isRequired = prop !== void 0 && rules[prop] && _.isArray(rules[prop]) ? rules[prop].filter((item) => !!item.required) : false;
+
+    this.isRequired =
+      prop !== void 0 && rules[prop] && _.isArray(rules[prop])
+        ? rules[prop].filter(item => !!item.required)
+        : false;
   }
   render() {
-    const { children, labelSpan, align, label, fields, model, prop, labelStyle, noLabel, ItemComponentLayout, labelWidth, labelPosition, style, ...remain } = this.props;
+    const {
+      children,
+      labelSpan,
+      align,
+      label,
+      fields,
+      model,
+      prop,
+      labelStyle,
+      noLabel,
+      ItemComponentLayout,
+      labelWidth,
+      labelPosition,
+      style,
+      ...remain
+    } = this.props;
 
     /**
      * labelPosition
-     * 
+     *
      * right - flex-start
      *         flex-end
      *         center
@@ -143,40 +165,49 @@ export default class FormItem extends React.Component {
     const alignLabelPosition = labelPositionArr[2] || 'right';
 
     return (
-      <Provider validateOnChange={this.validateOnChange} validateOnBlur={this.validateOnBlur}>
-        <Flexbox {...remain} flexDirection={mainLabelPosition === 'top' ? 'column' : 'row'} alignItems={viceLabelPosition}>
+      <Provider
+        validateOnChange={this.validateOnChange}
+        validateOnBlur={this.validateOnBlur}>
+        <Flexbox
+          {...remain}
+          flexDirection={mainLabelPosition === 'top' ? 'column' : 'row'}
+          alignItems={viceLabelPosition}>
           <Flexbox>
             <label
-              className={
-                `${label && 'i-form-label'} ${this.isRequired && 'ant-form-item-required'} ${labelPosition === 'top' && 'i-form-label-top'}`
-              }
-              style={{ ...labelStyle, width: labelWidth > 0 ? labelWidth : 'auto', textAlign: alignLabelPosition }}
+              className={`${label && 'i-form-label'} ${this.isRequired &&
+                'ant-form-item-required'} ${labelPosition === 'top' &&
+                'i-form-label-top'}`}
+              style={{
+                ...labelStyle,
+                width: labelWidth > 0 ? labelWidth : 'auto',
+                textAlign: alignLabelPosition,
+              }}
               title={label}
-              htmlFor={prop}
-            >
+              htmlFor={prop}>
               {label}
             </label>
           </Flexbox>
           <ItemComponentLayout className={`i-form-item`}>
-            <div className={
-              `i-form-item ${this.validateState === 'error' ? 'has-error' : ''}`
-            }>
+            <div
+              className={`i-form-item ${
+                this.validateState === 'error' ? 'has-error' : ''
+              }`}>
               {children}
-              {this.validateState === 'error' &&
+              {this.validateState === 'error' && (
                 <div className="ant-form-explain">
                   <Text size="small" type="error">
-                    <Icon style={IconStyle} type="exclamation-circle-o" />{this.validateMessage}
+                    <Icon style={IconStyle} type="exclamation-circle-o" />
+                    {this.validateMessage}
                   </Text>
                 </div>
-              }
+              )}
             </div>
           </ItemComponentLayout>
         </Flexbox>
       </Provider>
-    )
+    );
   }
 }
-
 
 // setProps(FormItem, {
 //   labelStyle: [null, PropTypes.object],

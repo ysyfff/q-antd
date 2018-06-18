@@ -2,13 +2,28 @@ import React from 'react';
 
 export default class Flexbox extends React.Component {
   render() {
-    const { style, children, alignItems, justifyContent, flexDirection, ...remain } = this.props;
+    const {
+      style,
+      children,
+      alignItems,
+      justifyContent,
+      flexDirection,
+      ...remain
+    } = this.props;
 
     return (
-      <div style={{ display: 'flex', alignItems, justifyContent, flexDirection, ...style }} {...remain}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems,
+          justifyContent,
+          flexDirection,
+          ...style,
+        }}
+        {...remain}>
         {children}
       </div>
-    )
+    );
   }
 }
 
@@ -19,7 +34,7 @@ class Block extends React.Component {
       <div style={{ ...style }} {...remain}>
         {children}
       </div>
-    )
+    );
   }
 }
 
@@ -31,7 +46,7 @@ class Flex extends React.Component {
       <div style={{ flex, ...style }} {...remain}>
         {children}
       </div>
-    )
+    );
   }
 }
 

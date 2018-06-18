@@ -6,30 +6,25 @@
 import * as React from 'react';
 import _ from 'lodash';
 
-
 function addUniKey(propsChildren) {
   React.Children.map(propsChildren, (cc, j) => {
     if (_.isObject(cc)) {
       //兼容只读属性不能重写key属性的情况
       try {
         cc.key = j;
-      } catch (err) {
-
-      }
+      } catch (err) {}
     }
     if (cc && cc.props && cc.props.children) {
-      addUniKey(cc.props.children)
+      addUniKey(cc.props.children);
     }
-  })
+  });
   return propsChildren;
 }
 
-
-export default function (parent, index) {
+export default function(parent, index) {
   return React.Children.map(parent, (child, i) => {
     let result = React.cloneElement(child, { key: i });
     addUniKey(result.props.children);
     return result;
-  })
+  });
 }
-

@@ -8,8 +8,7 @@ import warning from 'warning';
 
 global.qAntd = {
   config: {
-    keyCodes: {
-    },
+    keyCodes: {},
   },
 };
 
@@ -35,14 +34,17 @@ function getKeyCode(code) {
 
 export function testKeyCode(code) {
   if (isNaN(Number(code))) {
-    warning(enums[code] || global.qAntd.config.keyCodes[code], `${code}别名的按键修饰器未定义，已使用enter代替.有2中解决办法：
+    warning(
+      enums[code] || global.qAntd.config.keyCodes[code],
+      `${code}别名的按键修饰器未定义，已使用enter代替.有2中解决办法：
     1.可通过window.qAntd.config.keyCodes.${code}=123进行对${code}的定义，然后使用别名
     2.直接使用keyCode值
-    `);
+    `
+    );
   }
 }
-export default function (code, func) {
-  return (e) => {
+export default function(code, func) {
+  return e => {
     if (e.keyCode === getKeyCode(code)) {
       func();
     }

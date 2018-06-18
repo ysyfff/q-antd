@@ -39,8 +39,7 @@ export default class Form extends React.Component {
   // @observable rules = {}; //存储校验规则
 
   @autobind
-  validate(fn = ()=>1) {
-
+  validate(fn = () => 1) {
     return new Promise((resolve, reject) => {
       let valid = true;
       let count = 0;
@@ -62,7 +61,6 @@ export default class Form extends React.Component {
         resolve(valid);
         fn(valid);
       }
-
     });
   }
 
@@ -85,7 +83,7 @@ export default class Form extends React.Component {
   //     this.rules = nextProps.rules;
   //   }
   // }
-  componentDidMount(){
+  componentDidMount() {
     // if (this.rules !== this.props.rules) {
     //   this.rules = this.props.rules;
     // }
@@ -103,8 +101,17 @@ export default class Form extends React.Component {
      * bottom-center
      */
     const {
-      children, style, layout, fillCount, inline, labelWidth, labelPosition, manualLayout,
-      actionPosition, needCls, labelStyle,
+      children,
+      style,
+      layout,
+      fillCount,
+      inline,
+      labelWidth,
+      labelPosition,
+      manualLayout,
+      actionPosition,
+      needCls,
+      labelStyle,
       ...remain
     } = this.props;
 
@@ -118,13 +125,21 @@ export default class Form extends React.Component {
      *   false - 使用Form内部提供的布局，能满足绝大多数需求
      *   true - 不使用Form内部提供的布局，需要自己布局
      */
-    let formItems = [], actions = [], formItem = [];
-    let formItemTotal = 0, formItemCount = 0, formTotalCount = 0;
+    let formItems = [],
+      actions = [],
+      formItem = [];
+    let formItemTotal = 0,
+      formItemCount = 0,
+      formTotalCount = 0;
 
     if (!manualLayout) {
       React.Children.map(children, (item, i) => {
         if (item && item.type && item.type.name) {
-          if (item.type.name === 'FormItem' || item.type.wrappedComponent && item.type.wrappedComponent.name === 'FormItem') {
+          if (
+            item.type.name === 'FormItem' ||
+            (item.type.wrappedComponent &&
+              item.type.wrappedComponent.name === 'FormItem')
+          ) {
             formItemTotal++;
           }
         }
@@ -132,77 +147,111 @@ export default class Form extends React.Component {
 
       //对children内容进行重新布局，这就引起了unique key prop的warning，可使用childrenUniKey解决
       React.Children.map(children, (item, i) => {
-
         if (item && item.type && item.type.name) {
-          if (item.type.name === 'Action' || item.type.wrappedComponent && item.type.wrappedComponent.name === 'Action') {
+          if (
+            item.type.name === 'Action' ||
+            (item.type.wrappedComponent &&
+              item.type.wrappedComponent.name === 'Action')
+          ) {
             actions.push(item);
-          } else if (item.type.name === 'FormItem' || item.type.wrappedComponent && item.type.wrappedComponent.name === 'FormItem') {
+          } else if (
+            item.type.name === 'FormItem' ||
+            (item.type.wrappedComponent &&
+              item.type.wrappedComponent.name === 'FormItem')
+          ) {
             formItemCount++;
             formTotalCount++;
             formItem.push(item);
 
             //将formItem进行分组，不够一组用空的FormItem进行补齐
             if (fillCount === formItemCount) {
-              console.log('formitem........')
+              console.log('formitem........');
               formItems.push(_.merge([], formItem));
               formItemCount = 0;
               formItem = [];
             } else if (formTotalCount === formItemTotal) {
               let nurse = fillCount - formItemCount;
               while (nurse-- > 0) {
-                formItem.push(<FormItem></FormItem>)
+                formItem.push(<FormItem />);
               }
               formItems.push(formItem);
             }
           } else {
-            console.error(`Collect中出现了非formItems,Action,FormItem的控件：${item.type.name}`)
+            console.error(
+              `Collect中出现了非formItems,Action,FormItem的控件：${
+                item.type.name
+              }`
+            );
           }
         }
-
-      })
+      });
     }
 
     const layoutArr = layout.split(':');
-    const SearchComponentLayout = layoutArr[0] && (layoutArr[0] === 'flex' || layoutArr[0] === '') || layoutArr[0] === void 0 ? Flex : Block;
-    const ActionComponentLayout = layoutArr[1] && (layoutArr[1] === 'block' || layoutArr[1] === '') || layoutArr[1] === void 0 ? Block : Flex;
-    const ItemComponentLayout = layoutArr[2] && (layoutArr[2] === 'block' || layoutArr[2] === '') || layoutArr[2] === void 0 ? Block : Flex;
+    const SearchComponentLayout =
+      (layoutArr[0] && (layoutArr[0] === 'flex' || layoutArr[0] === '')) ||
+      layoutArr[0] === void 0
+        ? Flex
+        : Block;
+    const ActionComponentLayout =
+      (layoutArr[1] && (layoutArr[1] === 'block' || layoutArr[1] === '')) ||
+      layoutArr[1] === void 0
+        ? Block
+        : Flex;
+    const ItemComponentLayout =
+      (layoutArr[2] && (layoutArr[2] === 'block' || layoutArr[2] === '')) ||
+      layoutArr[2] === void 0
+        ? Block
+        : Flex;
 
     // inline && (SearchComponentLayout = Flex);
-    const formCls = needCls ? "i-form" : '';
-    console.log('debugger here')
+    const formCls = needCls ? 'i-form' : '';
+    console.log('debugger here');
 
     return (
-      <Provider fields={this.fields} duplexer={this.duplexer} rules={this.props.rules} {...remain} ItemComponentLayout={ItemComponentLayout} type="block" labelWidth={labelWidth} labelStyle={labelStyle} labelPosition={labelPosition} >
-        {manualLayout ?
-          <div className={formCls}>
-            {children}
-          </div>
-          :
-          inline ?
-            <Flexbox className={formCls}>
-              {/* {childrenUniKey(formItems)} */}
-              {/* {React.Children.map(formItems, (formItem, i) => {
+      <Provider
+        fields={this.fields}
+        duplexer={this.duplexer}
+        rules={this.props.rules}
+        {...remain}
+        ItemComponentLayout={ItemComponentLayout}
+        type="block"
+        labelWidth={labelWidth}
+        labelStyle={labelStyle}
+        labelPosition={labelPosition}>
+        {manualLayout ? (
+          <div className={formCls}>{children}</div>
+        ) : inline ? (
+          <Flexbox className={formCls}>
+            {/* {childrenUniKey(formItems)} */}
+            {/* {React.Children.map(formItems, (formItem, i) => {
                 return React.cloneElement(formItem, { key: i });
               })} */}
-              {childrenUniKey(formItems)}
-            </Flexbox>
-            :
-            <div>
-              <Flexbox className={formCls} alignItems={mainActionPosition === 'right' ? alignActionPosition : 'flex-start'}>
-                <SearchComponentLayout>
-                  {
-                    formItems.map((formItemWrap, i) => {
-                      //flex的时候，需要确保i-form-item-wrap元素是个Blcok，这个FormItem中flex才能生效
-                      return layout[2] === 'flex' ?
-                        (
-                          <Block key={`form-item-wrap-${i}`} className="i-form-item-wrap">
-                            {childrenUniKey(formItemWrap)}
-                            {/* {React.Children.map(formItemWrap, (formItems, i) => {
+            {childrenUniKey(formItems)}
+          </Flexbox>
+        ) : (
+          <div>
+            <Flexbox
+              className={formCls}
+              alignItems={
+                mainActionPosition === 'right'
+                  ? alignActionPosition
+                  : 'flex-start'
+              }>
+              <SearchComponentLayout>
+                {formItems.map((formItemWrap, i) => {
+                  //flex的时候，需要确保i-form-item-wrap元素是个Blcok，这个FormItem中flex才能生效
+                  return layout[2] === 'flex' ? (
+                    <Block
+                      key={`form-item-wrap-${i}`}
+                      className="i-form-item-wrap">
+                      {childrenUniKey(formItemWrap)}
+                      {/* {React.Children.map(formItemWrap, (formItems, i) => {
                               return React.cloneElement(React.Children.map(formItems, (formItem, j) => {
                                 return React.cloneElement(formItem, { key: j })
                               }), { key: i });
                             })} */}
-                            {/* {React.Children.map(formItemWrap, (formItems, i) => {
+                      {/* {React.Children.map(formItemWrap, (formItems, i) => {
                               let formItems = React.cloneElement(formItems, { key: i });
                               if (React.Children.count(formItems.props.children) > 1) {
                                 React.Children.map(formItems.props.children, (cc, j) => {
@@ -211,52 +260,52 @@ export default class Form extends React.Component {
                               }
                               return formItems;
                             })} */}
-                          </Block>
-                        )
-                        :
-                        (
-                          <Flexbox key={`form-item-wrap-${i}`} className="i-form-item-wrap">
-                            {childrenUniKey(formItemWrap)}
-                            {/* {React.Children.map(formItemWrap, (formItems, i) => {
+                    </Block>
+                  ) : (
+                    <Flexbox
+                      key={`form-item-wrap-${i}`}
+                      className="i-form-item-wrap">
+                      {childrenUniKey(formItemWrap)}
+                      {/* {React.Children.map(formItemWrap, (formItems, i) => {
                               return React.cloneElement(React.Children.map(formItems, (formItem, j) => {
                                 return React.cloneElement(formItem, { key: j })
                               }), { key: i });
                             })} */}
-                            {/* {React.Children.map(formItemWrap, (formItems, i) => {
+                      {/* {React.Children.map(formItemWrap, (formItems, i) => {
                               return React.cloneElement(formItems, { key: i });
                             })} */}
-                          </Flexbox>
-                        )
-                    })}
-                </SearchComponentLayout>
-                {
-                  mainActionPosition === 'right' ?
-                    <ActionComponentLayout style={{display: 'flex', alignItems: alignActionPosition, justifyContent: justifyActionPosition}}>
-                      {actions}
-                    </ActionComponentLayout>
-                    : null
-                }
-
+                    </Flexbox>
+                  );
+                })}
+              </SearchComponentLayout>
+              {mainActionPosition === 'right' ? (
+                <ActionComponentLayout
+                  style={{
+                    display: 'flex',
+                    alignItems: alignActionPosition,
+                    justifyContent: justifyActionPosition,
+                  }}>
+                  {actions}
+                </ActionComponentLayout>
+              ) : null}
+            </Flexbox>
+            {mainActionPosition === 'bottom' ? (
+              <Flexbox
+                justifyContent={justifyActionPosition}
+                alignItems={alignActionPosition}
+                className="i-form-action">
+                {actions}
               </Flexbox>
-              {
-                mainActionPosition === 'bottom' ?
-                  <Flexbox justifyContent={justifyActionPosition} alignItems={alignActionPosition} className="i-form-action">
-                    {actions}
-                  </Flexbox>
-                  : null
-              }
-
-            </div>
-
-        }
+            ) : null}
+          </div>
+        )}
       </Provider>
-    )
+    );
   }
 }
 
 Form.FormItem = FormItem;
 Form.Action = Action;
-
 
 setProps(Form, {
   validateOnChange: [e => 1, PropTypes.func],
@@ -269,5 +318,5 @@ setProps(Form, {
   fillCount: [1, PropTypes.number],
   manualLayout: [false, PropTypes.bool],
   labelWidth: [0, PropTypes.number], //labelWidth为0时，会将0替换为‘auto’
-  needCls: [true, PropTypes.bool]
+  needCls: [true, PropTypes.bool],
 });

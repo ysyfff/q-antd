@@ -4,19 +4,33 @@ import setProps from 'set-props';
 
 export default class Text extends React.Component {
   render() {
-    const { type, size, className, children, bold, italic, ml, mr, pl, pr, style, ...remain } = this.props;
+    const {
+      type,
+      size,
+      className,
+      children,
+      bold,
+      italic,
+      ml,
+      mr,
+      pl,
+      pr,
+      style,
+      ...remain
+    } = this.props;
     return (
       <span
-        className={`i-text-type-${type} i-text-size-${size} ${className} ${bold ? 'i-text-bold' : ''} ${italic ? 'i-text-italic' : ''}`}
+        className={`i-text-type-${type} i-text-size-${size} ${className} ${
+          bold ? 'i-text-bold' : ''
+        } ${italic ? 'i-text-italic' : ''}`}
         style={{
           marginLeft: ml,
           marginRight: mr,
           paddingLeft: pl,
           paddingRight: pr,
-          ...style
+          ...style,
         }}
-        {...remain}
-      >
+        {...remain}>
         {children}
       </span>
     );
