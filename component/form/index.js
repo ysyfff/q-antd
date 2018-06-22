@@ -179,7 +179,7 @@ export default class Form extends React.Component {
           } else {
             console.error(
               `Collect中出现了非formItems,Action,FormItem的控件：${
-              item.type.name
+                item.type.name
               }`
             );
           }
@@ -190,17 +190,17 @@ export default class Form extends React.Component {
     const layoutArr = layout.split(':');
     const SearchComponentLayout =
       (layoutArr[0] && (layoutArr[0] === 'flex' || layoutArr[0] === '')) ||
-        layoutArr[0] === void 0
+      layoutArr[0] === void 0
         ? Flex
         : Block;
     const ActionComponentLayout =
       (layoutArr[1] && (layoutArr[1] === 'block' || layoutArr[1] === '')) ||
-        layoutArr[1] === void 0
+      layoutArr[1] === void 0
         ? Block
         : Flex;
     const ItemComponentLayout =
       (layoutArr[2] && (layoutArr[2] === 'block' || layoutArr[2] === '')) ||
-        layoutArr[2] === void 0
+      layoutArr[2] === void 0
         ? Block
         : Flex;
 
@@ -220,7 +220,9 @@ export default class Form extends React.Component {
         labelStyle={labelStyle}
         labelPosition={labelPosition}>
         {manualLayout ? (
-          <div className={formCls} {...remain}>{children}</div>
+          <div className={formCls} {...remain}>
+            {children}
+          </div>
         ) : inline ? (
           <Flexbox className={formCls} {...remain}>
             {/* {childrenUniKey(formItems)} */}
@@ -230,29 +232,29 @@ export default class Form extends React.Component {
             {childrenUniKey(formItems)}
           </Flexbox>
         ) : (
-              <div>
-                <Flexbox
-                  className={formCls}
-                  {...remain}
-                  alignItems={
-                    mainActionPosition === 'right'
-                      ? alignActionPosition
-                      : 'flex-start'
-                  }>
-                  <SearchComponentLayout>
-                    {formItems.map((formItemWrap, i) => {
-                      //flex的时候，需要确保i-form-item-wrap元素是个Blcok，这个FormItem中flex才能生效
-                      return layout[2] === 'flex' ? (
-                        <Block
-                          key={`form-item-wrap-${i}`}
-                          className="i-form-item-wrap">
-                          {childrenUniKey(formItemWrap)}
-                          {/* {React.Children.map(formItemWrap, (formItems, i) => {
+          <div>
+            <Flexbox
+              className={formCls}
+              {...remain}
+              alignItems={
+                mainActionPosition === 'right'
+                  ? alignActionPosition
+                  : 'flex-start'
+              }>
+              <SearchComponentLayout>
+                {formItems.map((formItemWrap, i) => {
+                  //flex的时候，需要确保i-form-item-wrap元素是个Blcok，这个FormItem中flex才能生效
+                  return layout[2] === 'flex' ? (
+                    <Block
+                      key={`form-item-wrap-${i}`}
+                      className="i-form-item-wrap">
+                      {childrenUniKey(formItemWrap)}
+                      {/* {React.Children.map(formItemWrap, (formItems, i) => {
                               return React.cloneElement(React.Children.map(formItems, (formItem, j) => {
                                 return React.cloneElement(formItem, { key: j })
                               }), { key: i });
                             })} */}
-                          {/* {React.Children.map(formItemWrap, (formItems, i) => {
+                      {/* {React.Children.map(formItemWrap, (formItems, i) => {
                               let formItems = React.cloneElement(formItems, { key: i });
                               if (React.Children.count(formItems.props.children) > 1) {
                                 React.Children.map(formItems.props.children, (cc, j) => {
@@ -261,45 +263,45 @@ export default class Form extends React.Component {
                               }
                               return formItems;
                             })} */}
-                        </Block>
-                      ) : (
-                          <Flexbox
-                            key={`form-item-wrap-${i}`}
-                            className="i-form-item-wrap">
-                            {childrenUniKey(formItemWrap)}
-                            {/* {React.Children.map(formItemWrap, (formItems, i) => {
+                    </Block>
+                  ) : (
+                    <Flexbox
+                      key={`form-item-wrap-${i}`}
+                      className="i-form-item-wrap">
+                      {childrenUniKey(formItemWrap)}
+                      {/* {React.Children.map(formItemWrap, (formItems, i) => {
                               return React.cloneElement(React.Children.map(formItems, (formItem, j) => {
                                 return React.cloneElement(formItem, { key: j })
                               }), { key: i });
                             })} */}
-                            {/* {React.Children.map(formItemWrap, (formItems, i) => {
+                      {/* {React.Children.map(formItemWrap, (formItems, i) => {
                               return React.cloneElement(formItems, { key: i });
                             })} */}
-                          </Flexbox>
-                        );
-                    })}
-                  </SearchComponentLayout>
-                  {mainActionPosition === 'right' ? (
-                    <ActionComponentLayout
-                      style={{
-                        display: 'flex',
-                        alignItems: alignActionPosition,
-                        justifyContent: justifyActionPosition,
-                      }}>
-                      {actions}
-                    </ActionComponentLayout>
-                  ) : null}
-                </Flexbox>
-                {mainActionPosition === 'bottom' ? (
-                  <Flexbox
-                    justifyContent={justifyActionPosition}
-                    alignItems={alignActionPosition}
-                    className="i-form-action">
-                    {actions}
-                  </Flexbox>
-                ) : null}
-              </div>
-            )}
+                    </Flexbox>
+                  );
+                })}
+              </SearchComponentLayout>
+              {mainActionPosition === 'right' ? (
+                <ActionComponentLayout
+                  style={{
+                    display: 'flex',
+                    alignItems: alignActionPosition,
+                    justifyContent: justifyActionPosition,
+                  }}>
+                  {actions}
+                </ActionComponentLayout>
+              ) : null}
+            </Flexbox>
+            {mainActionPosition === 'bottom' ? (
+              <Flexbox
+                justifyContent={justifyActionPosition}
+                alignItems={alignActionPosition}
+                className="i-form-action">
+                {actions}
+              </Flexbox>
+            ) : null}
+          </div>
+        )}
       </Provider>
     );
   }
