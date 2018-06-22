@@ -1,6 +1,6 @@
 {
   "name": "q-antd",
-  "version": "2.3.15",
+  "version": "2.3.16",
   "description": "双绑形式的antd。受控组件的双绑、Form表单验证",
   "main": "./lib/index.js",
   "repository": {
@@ -54,6 +54,7 @@
   "scripts": {
     "compile": "q-antd-tools run compile",
     "test": "jest --config .jest.js",
+    "p": "yarn compile && yarn publish",
     "format": "prettier --config .prettierrc --write \"component/**/*.js\""
   }
 }
