@@ -212,7 +212,6 @@ export default class Form extends React.Component {
         fields={this.fields}
         duplexer={this.duplexer}
         rules={this.props.rules}
-        {...remain}
         ItemComponentLayout={ItemComponentLayout}
         type="block"
         labelWidth={labelWidth}
