@@ -102,7 +102,6 @@ export default class Form extends React.Component {
      */
     const {
       children,
-      style,
       layout,
       fillCount,
       inline,
