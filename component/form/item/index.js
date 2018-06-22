@@ -123,10 +123,10 @@ export default class FormItem extends React.Component {
       this.props.fields.push(this);
     }
 
-    console.log(JSON.stringify(rules[prop]), '8888888888')
+    const pureRules = mobx.toJS(rules[prop]);
     this.isRequired =
-      prop !== void 0 && rules[prop] && _.isArray(rules[prop])
-        ? !!rules[prop].filter(item => !!item.required)
+      prop !== void 0 && pureRules && Array.isArray(pureRules)
+        ? !!pureRules.filter(item => !!item.required)
         : false;
     console.log(this.isRequired, '99999999999')
   }
