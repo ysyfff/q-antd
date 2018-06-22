@@ -10,7 +10,6 @@ import Flexbox from '../../flexbox';
 const { Flex, Block } = Flexbox;
 import Text from '../../text';
 import View from '../../view';
-import _ from 'lodash';
 import setProps from 'set-props';
 const IconStyle = {
   transform: 'scale(0.85)',
@@ -63,7 +62,7 @@ export default class FormItem extends React.Component {
           // debugger
           //如果有trigger配置参数，提取对应的trigger规则，否则返回false，那么theRule就是空数组，就不进行校验
           if (rule.trigger) {
-            if (_.isArray(rule.trigger)) {
+            if (Array.isArray(rule.trigger)) {
               return rule.trigger.includes(trigger);
             } else {
               return rule.trigger === trigger ? true : false;
