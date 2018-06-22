@@ -165,7 +165,6 @@ export default class Form extends React.Component {
 
             //将formItem进行分组，不够一组用空的FormItem进行补齐
             if (fillCount === formItemCount) {
-              console.log('formitem........');
               formItems.push(_.merge([], formItem));
               formItemCount = 0;
               formItem = [];
@@ -206,7 +205,6 @@ export default class Form extends React.Component {
 
     // inline && (SearchComponentLayout = Flex);
     const formCls = needCls ? 'i-form' : '';
-    console.log('debugger here');
 
     return (
       <Provider
