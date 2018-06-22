@@ -111,6 +111,7 @@ export default class Form extends React.Component {
       actionPosition,
       needCls,
       labelStyle,
+      style,
       ...remain
     } = this.props;
 
@@ -216,13 +217,14 @@ export default class Form extends React.Component {
         type="block"
         labelWidth={labelWidth}
         labelStyle={labelStyle}
+        {...remain}
         labelPosition={labelPosition}>
         {manualLayout ? (
-          <div className={formCls} {...remain}>
+          <div className={formCls} style={style}>
             {children}
           </div>
         ) : inline ? (
-          <Flexbox className={formCls} {...remain}>
+          <Flexbox className={formCls} style={style}>
             {/* {childrenUniKey(formItems)} */}
             {/* {React.Children.map(formItems, (formItem, i) => {
                 return React.cloneElement(formItem, { key: i });
@@ -233,7 +235,7 @@ export default class Form extends React.Component {
           <div>
             <Flexbox
               className={formCls}
-              {...remain}
+              style={style}
               alignItems={
                 mainActionPosition === 'right'
                   ? alignActionPosition
