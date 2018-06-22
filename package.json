@@ -39,7 +39,7 @@
     "lodash": "^4.17.5",
     "moment": "^2.20.1",
     "prop-types": "^15.6.1",
-    "set-props": "^1.0.8",
+    "set-props": "^1.0.9",
     "warning": "^3.0.0"
   },
   "keywords": [

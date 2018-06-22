@@ -5313,9 +5313,9 @@ set-immediate-shim@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/set-immediate-shim/-/set-immediate-shim-1.0.1.tgz#4b2b1b27eb808a9f8dcc481a58e5e56f599f3f61"
 
-set-props@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/set-props/-/set-props-1.0.8.tgz#d0becadad76604cafba07be03e94e0d92d47c34b"
+set-props@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/set-props/-/set-props-1.0.9.tgz#940e0b76671179aae61fa6d67359fcad2e654348"
 
 set-value@^0.4.3:
   version "0.4.3"
