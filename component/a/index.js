@@ -5,7 +5,10 @@ export default class A extends React.Component {
     const { children, className, size, ...other } = this.props;
 
     return (
-      <a href="javascript:void 0" className={`i-a ${className} i-a-${size}`} {...other}>
+      <a
+        href="javascript:void 0"
+        className={`i-a ${className} i-a-${size}`}
+        {...other}>
         {children}
       </a>
     );
