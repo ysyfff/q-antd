@@ -206,6 +206,11 @@ export default class Form extends React.Component {
     // inline && (SearchComponentLayout = Flex);
     const formCls = needCls ? 'i-form' : '';
 
+    const addons = {};
+    if(!remain.rules) { //如果用户没有传入rules属性，需要确保此属性出现在Provider上
+      addons.rules = {};
+    }
+
     return (
       <Provider
         fields={this.fields}
@@ -216,6 +221,7 @@ export default class Form extends React.Component {
         labelWidth={labelWidth}
         labelStyle={labelStyle}
         {...remain}
+        {...addons}
         labelPosition={labelPosition}>
         {manualLayout ? (
           <div className={formCls} style={style}>
