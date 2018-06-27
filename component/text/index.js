@@ -16,18 +16,24 @@ export default class Text extends React.Component {
       pl,
       pr,
       style,
+      center,
+      left,
+      right,
       ...remain
     } = this.props;
     return (
       <span
         className={`i-text-type-${type} i-text-size-${size} ${className} ${
           bold ? 'i-text-bold' : ''
-        } ${italic ? 'i-text-italic' : ''}`}
+          } ${italic ? 'i-text-italic' : ''}`}
         style={{
           marginLeft: ml,
           marginRight: mr,
           paddingLeft: pl,
           paddingRight: pr,
+          textAlign: center ? 'center' :
+            left ? 'left' :
+              right ? 'right' : 'inherit',
           ...style,
         }}
         {...remain}>
@@ -41,4 +47,5 @@ setProps(Text, {
   size: ['normal', PropTypes.string],
   type: ['normal', PropTypes.string],
   bold: [false, PropTypes.bool],
+
 });
