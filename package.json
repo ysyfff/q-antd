@@ -1,6 +1,6 @@
 {
   "name": "q-antd",
-  "version": "2.3.19",
+  "version": "2.3.20",
   "description": "双绑形式的antd。受控组件的双绑、Form表单验证",
   "main": "./lib/index.js",
   "repository": {
