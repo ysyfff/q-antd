@@ -49,6 +49,11 @@ describe('测试Form', () => {
     expect(wrapper.find('label').hasClass('i-form-label')).toBe(true)
   });
 
+ 
+
+});
+
+describe('测试Item', ()=>{
   const model2 = observable({
     name: '你猜不到'
   })
@@ -58,7 +63,7 @@ describe('测试Form', () => {
     render() {
       return (
         <Form model={model2}>
-          <FormItem label="姓名" >
+          <FormItem label="姓名" requiredFlag={false}>
             <Input_ duplex="name" />
           </FormItem>
         </Form>
@@ -71,5 +76,8 @@ describe('测试Form', () => {
   )
   it('it should run well while no rules prop', () => {
     expect(wrapper2.find('input').prop('value')).toBe('你猜不到')
+  });
+  it('requiredFlag support false', () => {
+    expect(wrapper2.find('label').hasClass('ant-form-item-required')).toBe(false)
   })
-});
+})

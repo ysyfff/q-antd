@@ -1,2 +1,4 @@
+- 2.3.18
+  - Text支持center,left,right
 - 2.3.10
   - 修复Form style属性不生效问题

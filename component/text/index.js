@@ -47,5 +47,7 @@ setProps(Text, {
   size: ['normal', PropTypes.string],
   type: ['normal', PropTypes.string],
   bold: [false, PropTypes.bool],
-
+  center: [false, PropTypes.bool],
+  left: [false, PropTypes.bool],
+  rights: [false, PropTypes.bool],
 });

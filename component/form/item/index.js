@@ -144,6 +144,7 @@ export default class FormItem extends React.Component {
       labelWidth,
       labelPosition,
       style,
+      requiredFlag,
       ...remain
     } = this.props;
 
@@ -175,7 +176,7 @@ export default class FormItem extends React.Component {
           alignItems={viceLabelPosition}>
           <Flexbox>
             <label
-              className={`${label && 'i-form-label'} ${this.isRequired &&
+              className={`${label && 'i-form-label'} ${this.isRequired && requiredFlag &&
                 'ant-form-item-required'} ${labelPosition === 'top' &&
                 'i-form-label-top'}`}
               style={{
@@ -210,6 +211,6 @@ export default class FormItem extends React.Component {
   }
 }
 
-// setProps(FormItem, {
-//   labelStyle: [null, PropTypes.object],
-// });
+setProps(FormItem, {
+  requiredFlag: [true, PropTypes.bool],
+});
