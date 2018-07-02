@@ -1,3 +1,7 @@
+
+
+- 2.3.20
+  - Item支持requriedFlag属性
 - 2.3.18
   - Text支持center,left,right
 - 2.3.10
