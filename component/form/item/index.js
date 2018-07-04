@@ -127,7 +127,7 @@ export default class FormItem extends React.Component {
       prop !== void 0 && pureRules && Array.isArray(pureRules)
         ? pureRules.some(item => !!item.required)
         : false;
-    console.log(this.isRequired, '99999999999')
+    console.log(this.isRequired, '99999999999');
   }
   render() {
     const {
@@ -176,7 +176,8 @@ export default class FormItem extends React.Component {
           alignItems={viceLabelPosition}>
           <Flexbox>
             <label
-              className={`${label && 'i-form-label'} ${this.isRequired && requiredFlag &&
+              className={`${label && 'i-form-label'} ${this.isRequired &&
+                requiredFlag &&
                 'ant-form-item-required'} ${labelPosition === 'top' &&
                 'i-form-label-top'}`}
               style={{

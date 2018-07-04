@@ -25,15 +25,19 @@ export default class Text extends React.Component {
       <span
         className={`i-text-type-${type} i-text-size-${size} ${className} ${
           bold ? 'i-text-bold' : ''
-          } ${italic ? 'i-text-italic' : ''}`}
+        } ${italic ? 'i-text-italic' : ''}`}
         style={{
           marginLeft: ml,
           marginRight: mr,
           paddingLeft: pl,
           paddingRight: pr,
-          textAlign: center ? 'center' :
-            left ? 'left' :
-              right ? 'right' : 'inherit',
+          textAlign: center
+            ? 'center'
+            : left
+              ? 'left'
+              : right
+                ? 'right'
+                : 'inherit',
           ...style,
         }}
         {...remain}>
