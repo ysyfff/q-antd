@@ -35,13 +35,20 @@ function partOf(a, b) {
 }
 
 export default ComposedComponent =>
-  inject('model', 'duplexer', 'validateOnChange', 'validateOnBlur')(
+  inject(
+    'model',
+    'duplexer',
+    'validateOnChange',
+    'validateOnBlur',
+    'getDuplexFromElement'
+  )(
     observer(
       class extends React.Component {
         componentDidMount() {
           const { duplex, model } = this.props;
           const duplexString = Array.isArray(duplex) ? duplex[0] : duplex;
-
+          //向FormItem传递duplex属性
+          this.props.getDuplexFromElement(duplex);
           this.props.duplexer.push(duplexString);
 
           // 检测code是否存在

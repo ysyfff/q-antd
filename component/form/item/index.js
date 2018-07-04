@@ -35,6 +35,7 @@ export default class FormItem extends React.Component {
   @observable validateMessage = '';
   @observable isRequired = false;
   @observable trigger = 'onChange';
+  @observable formDuplex = ''; //调用getDuplexFromElement，从表单元素中获取duplex属性
 
   @autobind
   validateOnChange() {
@@ -47,8 +48,13 @@ export default class FormItem extends React.Component {
   }
 
   @autobind
+  getDuplexFromElement(duplex) {
+    formDuplex = duplex;
+  }
+
+  @autobind
   validate(trigger, fn = () => 1) {
-    const { rules, prop, model, duplex } = this.props;
+    const { rules, prop, model } = this.props;
     console.log('item validate');
 
     if (prop === void 0 || rules === void 0) {
@@ -84,14 +90,13 @@ export default class FormItem extends React.Component {
     let theModel = {};
 
     // debugger
-    //从model中根据prop或者duplex获取对应的值
-    theModel[prop] = mobx.toJS(model[prop]);
-
-    if (!theModel[prop] && duplex !== none) {
-      let uuid = duplex[1];
+    //如果formDuplex是数组，说明是循环的，需要特殊处理
+    if (Array.isArray(toJS(formDuplex))) {
+      let uuid = formDuplex[1];
       descriptor[uuid] = theRules;
-      theModel[uuid] = mobx.toJS(model[duplex[0]][duplex[1]]);
+      theModel[uuid] = mobx.toJS(model[formDuplex[0]][formDuplex[1]]);
     } else {
+      theModel[prop] = mobx.toJS(model[formDuplex]);
       descriptor[prop] = theRules;
     }
 
@@ -116,7 +121,7 @@ export default class FormItem extends React.Component {
   }
 
   componentDidMount() {
-    const { prop, rules, duplex } = this.props;
+    const { prop, rules } = this.props;
     //如果有prop属性，才push到fields数组中
     if (prop !== void 0) {
       this.props.fields.push(this);
@@ -169,6 +174,7 @@ export default class FormItem extends React.Component {
     return (
       <Provider
         validateOnChange={this.validateOnChange}
+        getDuplexFromElement={this.getDuplexFromElement}
         validateOnBlur={this.validateOnBlur}>
         <Flexbox
           {...remain}
