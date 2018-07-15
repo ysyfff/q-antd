@@ -159,7 +159,7 @@ export default class Remind extends React.Component {
 ---|---|---|
 resetFields | 重置表单默认值 | this.xxxFrom.resetFields()
 resetFieldsStyle| 重置校验过之后的样式 | this.xxxFrom.resetFieldsStyle()
-validate| 校验表单，返回一个Promise实例，也支持传入回调函数处理 | this.xxxForm.validate().then((valid)=>{}) 或者 this.xxxForm.validate((valid)=>{})
+validate| 校验一项表单，,__若 propName 参数为空，则校验全部组件__，返回一个Promise实例，也支持传入回调函数处理	 | this.xxxForm.validate(propName).then((valid)=>{}) 或者 this.xxxForm.validate(propName, (valid)=>{})
 
 #### Form属性
 
