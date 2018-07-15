@@ -9,45 +9,52 @@ import Input_ from '../../input_';
 import { observer } from 'mobx-react';
 
 describe('测试Form', () => {
-  // beforeEach(() => {
-  //   jest.useFakeTimers();
-  // });
-
-  // afterEach(() => {
-  //   jest.useRealTimers();
-  // });
-
   const model = observable({
     name: '',
-    name2: '',
+    pwd: '',
   });
+  let jj = null;
   const rules = observable({
-    pwd: [
+    name: [
       {
         required: true,
         message: '必须填写',
         trigger: 'blur',
       },
+      // {
+      //   validator(rule, value, callback) {
+      //     jj.validate('pwdRule').then((res) => {
+
+      //     })
+      //   },
+      //   trigger: 'change'
+      // }
     ],
-    name: [
+    pwdRule: [
       {
         required: false,
         message: '',
         trigger: 'change',
       },
+      {
+        validator(rule, value, callback) {
+          callback('可以了')
+        }
+      }
     ],
   });
+
 
   @observer
   class Demo extends React.Component {
     render() {
       return (
-        <Form model={model} rules={rules}>
-          <FormItem label="姓名" prop="pwd">
+        <Form model={model} rules={rules} ref={ref => jj = ref}>
+          <FormItem label="姓名" prop="name">
             <Input_ duplex="name" />
           </FormItem>
-          <FormItem label="姓名2" prop="name">
-            <Input_ duplex="name2" />
+          <FormItem label="密码" prop="pwdRule">
+            <Input_ duplex="pwd" />
           </FormItem>
         </Form>
       );
@@ -55,7 +62,7 @@ describe('测试Form', () => {
   }
 
   const wrapper = mount(<Demo />);
-  it('label should have the class', () => {
+  it('姓名为必填，label应该有必填星标', () => {
     // jest.runAllTimers();
     // expect(wrapper).toMatchSnapshot();
     expect(
@@ -71,8 +78,21 @@ describe('测试Form', () => {
         .hasClass('i-form-label')
     ).toBe(true);
   });
+  it('改变姓名时，校验密码规则', () => {
+    console.log('wtfffffffffffff')
+    wrapper.find('input').at(0).simulate('change', { target: { value: 1 } });
+    // wrapper.find('input').at(0).simulate('change', { target: { value: 1 } });
+    console.log(wrapper.find('input').at(0).prop('value'), 'Niiiiiiiii')
+    
+      expect(wrapper.find('.ant-form-explain')).toHaveLength(1);
 
-  it('label should not have the class', () => {
+    // setTimeout(()=>{
+    // expect(wrapper.find('.ant-form-explain')).toHaveLength(1);
+    // expect(wrapper.find('.ant-form-explain').innerText).toBe('可以了呢是')
+    // }, 0);
+  })
+
+  it('姓名2为非必填，label不能有必填星标', () => {
     expect(
       wrapper
         .find('label')
@@ -80,80 +100,8 @@ describe('测试Form', () => {
         .hasClass('ant-form-item-required')
     ).toBe(false);
   });
+
+  
 });
 
-describe('测试Item', () => {
-  const model2 = observable({
-    name: '你猜不到',
-  });
 
-  @observer
-  class DemoNoRules extends React.Component {
-    render() {
-      return (
-        <Form model={model2}>
-          <FormItem label="姓名" requiredFlag={false}>
-            <Input_ duplex="name" />
-          </FormItem>
-        </Form>
-      );
-    }
-  }
-
-  const wrapper2 = mount(<DemoNoRules />);
-  it('it should run well while no rules prop', () => {
-    expect(wrapper2.find('input').prop('value')).toBe('你猜不到');
-  });
-  it('requiredFlag support false', () => {
-    expect(wrapper2.find('label').hasClass('ant-form-item-required')).toBe(
-      false
-    );
-  });
-  describe('测试Item rules', () => {
-    const model = observable({
-      phoneNumber: '',
-      name: '尹士勇',
-      verifyCode: '',
-      password: '',
-      passwordAgain: '',
-    });
-    const rules = observable({
-      pwd: [
-        {
-          required: true,
-          message: '必须填写',
-          trigger: 'blur',
-        },
-      ],
-    });
-    @observer
-    class DemoValidate extends React.Component {
-      render() {
-        return (
-          <Form model={model} rules={rules}>
-            <FormItem prop="pwd">
-              <Input_ duplex="password" />
-            </FormItem>
-          </Form>
-        );
-      }
-    }
-    const wrapper = mount(<DemoValidate />);
-
-    it('required=true, requiredFlag=true', () => {
-      expect(wrapper.find('label').hasClass('ant-form-item-required')).toBe(
-        true
-      );
-    });
-    //改变属性
-    it('test required when value is not empty', () => {
-      wrapper.find('input').simulate('change', { target: { value: '23' } });
-      expect(wrapper.find('.ant-form-explain')).toHaveLength(0);
-    });
-
-    it('test required when value is empty', () => {
-      wrapper.find('input').simulate('change', { target: { value: '' } });
-      expect(wrapper.find('.ant-form-explain')).toHaveLength(1);
-    });
-  });
-});

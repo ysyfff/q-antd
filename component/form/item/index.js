@@ -1,7 +1,7 @@
 import { Icon } from 'antd';
 import * as React from 'react';
 import * as mobx from 'mobx';
-const { observable, action } = mobx;
+const { observable, action, toJS } = mobx;
 import { observer, inject, Provider } from 'mobx-react';
 import AsyncValidator from 'async-validator';
 import { autobind } from 'core-decorators';
@@ -49,7 +49,7 @@ export default class FormItem extends React.Component {
 
   @autobind
   getDuplexFromElement(duplex) {
-    formDuplex = duplex;
+    this.formDuplex = duplex;
   }
 
   @autobind
@@ -62,7 +62,7 @@ export default class FormItem extends React.Component {
     }
     // debugger
     //从rules根据prop中获取对应的校验规则，并根据trigger进行过滤
-    const pureRules = mobx.toJS(rules[prop]) || [];
+    const pureRules = toJS(rules[prop]) || [];
     const theRules = trigger
       ? pureRules.filter(rule => {
           // debugger
@@ -91,12 +91,12 @@ export default class FormItem extends React.Component {
 
     // debugger
     //如果formDuplex是数组，说明是循环的，需要特殊处理
-    if (Array.isArray(toJS(formDuplex))) {
-      let uuid = formDuplex[1];
+    if (Array.isArray(toJS(this.formDuplex))) {
+      let uuid = this.formDuplex[1];
       descriptor[uuid] = theRules;
-      theModel[uuid] = mobx.toJS(model[formDuplex[0]][formDuplex[1]]);
+      theModel[uuid] = toJS(model[this.formDuplex[0]][this.formDuplex[1]]);
     } else {
-      theModel[prop] = mobx.toJS(model[formDuplex]);
+      theModel[prop] = toJS(model[this.formDuplex]);
       descriptor[prop] = theRules;
     }
 
@@ -127,7 +127,7 @@ export default class FormItem extends React.Component {
       this.props.fields.push(this);
     }
 
-    const pureRules = mobx.toJS(rules[prop]);
+    const pureRules = toJS(rules[prop]);
     this.isRequired =
       prop !== void 0 && pureRules && Array.isArray(pureRules)
         ? pureRules.some(item => !!item.required)

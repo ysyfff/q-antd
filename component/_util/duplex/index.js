@@ -34,6 +34,52 @@ function partOf(a, b) {
   return b.indexOf(a) === 0 && ['.', '['].indexOf(b[a.length]) !== -1;
 }
 
+function getValue(componentName, e) {
+  let v;
+  switch (componentName) {
+    case 'Input':
+    case 'TextArea':
+    case 'RadioGroup':
+      v = e.target.value;
+      break;
+    case 'Radio':
+    case 'Checkbox':
+      v = e.target.checked;
+      break;
+    case 'CheckboxGroup':
+    case 'AutoComplete':
+    case 'Cascader':
+    case 'InputNumber':
+    case 'Rate':
+    case 'Select':
+    case 'Slider':
+    case 'Switch':
+    case 'TreeSelect':
+    case 'Transfer':
+      v = e;
+      break;
+    case 'Mention':
+      v = toString(e);
+      break;
+    case 'TimePicker':
+      v = e.format('HH:mm:ss');
+      break;
+    case 'PickerWrapper':
+      if (!staticWith2Param) {
+        v = e.format('YYYY-MM-DD');
+      }
+      break;
+    default: {
+      v = e;
+      const msg = '未捕获组件类型';
+      warning(true, `${msg}: ${componentName}`);
+      break;
+    }
+  }
+
+  return v;
+}
+
 export default ComposedComponent =>
   inject(
     'model',
@@ -204,6 +250,7 @@ export default ComposedComponent =>
             model,
             children,
             onChange = () => 1,
+            onBlur = () => 1,
             validateOnChange,
             validateOnBlur,
             noDefault,
@@ -248,7 +295,7 @@ export default ComposedComponent =>
 
           const isStaticWith2Param = staticWith2Param
             ? Object.prototype.hasOwnProperty.call(model, keys1) &&
-              Object.prototype.hasOwnProperty.call(model, keys2)
+            Object.prototype.hasOwnProperty.call(model, keys2)
             : Object.prototype.hasOwnProperty.call(model, duplex);
           const isDynamic = dynamic
             ? Object.prototype.hasOwnProperty.call(model, duplex[0])
@@ -322,57 +369,19 @@ export default ComposedComponent =>
             <ComposedComponent
               {...remain}
               {...addons}
-              onBlur={() => {
+              onBlur={(e) => {
                 setTimeout(() => {
                   validateOnBlur();
                 });
+                let v = getValue(componentName, e);
+                onBlur(v);
               }}
               onChange={(e, options) => {
                 setTimeout(() => {
                   validateOnChange();
                 });
-                let v;
                 // 双绑之回
-                switch (componentName) {
-                  case 'Input':
-                  case 'TextArea':
-                  case 'RadioGroup':
-                    v = e.target.value;
-                    break;
-                  case 'Radio':
-                  case 'Checkbox':
-                    v = e.target.checked;
-                    break;
-                  case 'CheckboxGroup':
-                  case 'AutoComplete':
-                  case 'Cascader':
-                  case 'InputNumber':
-                  case 'Rate':
-                  case 'Select':
-                  case 'Slider':
-                  case 'Switch':
-                  case 'TreeSelect':
-                  case 'Transfer':
-                    v = e;
-                    break;
-                  case 'Mention':
-                    v = toString(e);
-                    break;
-                  case 'TimePicker':
-                    v = e.format('HH:mm:ss');
-                    break;
-                  case 'PickerWrapper':
-                    if (!staticWith2Param) {
-                      v = e.format('YYYY-MM-DD');
-                    }
-                    break;
-                  default: {
-                    v = e;
-                    const msg = '未捕获组件类型';
-                    warning(true, `${msg}: ${componentName}`);
-                    break;
-                  }
-                }
+                let v = getValue(componentName, e);
 
                 if (staticWith2Param) {
                   // 静态两个变量

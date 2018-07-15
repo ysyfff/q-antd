@@ -18,7 +18,7 @@ export default class Model extends React.Component {
 
   @autobind
   @action
-  nilFunction() {}
+  nilFunction() { }
 
   render() {
     const { model, children, ...remain } = this.props;
@@ -28,6 +28,7 @@ export default class Model extends React.Component {
         duplexer={this.duplexer}
         validateOnChange={this.nilFunction}
         validateOnBlur={this.nilFunction}
+        getDuplexFromElement={() => 1}
         {...remain}>
         {children}
       </Provider>
