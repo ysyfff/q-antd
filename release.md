@@ -1,4 +1,5 @@
-
+- 2.3.29
+  - FormInstance.validate支持校根据propName进行校验
 - 2.3.24
   - 修复没调用onBlur的bug
 - 2.3.20
